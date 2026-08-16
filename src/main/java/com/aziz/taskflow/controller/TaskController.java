@@ -16,11 +16,16 @@ import java.util.concurrent.Future;
 @RequestMapping("/tasks")
 public class TaskController {
 
+    private final ExecutorService executor;
+
+    public TaskController(ExecutorService executor) {
+        this.executor = executor;
+    }
+
     @PostMapping
     public String executeTask(@RequestParam int taskCount) throws ExecutionException, InterruptedException {
         long startTime = System.currentTimeMillis();
 
-        ExecutorService executor = Executors.newFixedThreadPool(10);
         List<Future<?>> futures = new ArrayList<>();
 
         for (int i = 0; i < taskCount; i++) {
