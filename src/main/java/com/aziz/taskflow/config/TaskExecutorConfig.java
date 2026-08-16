@@ -11,6 +11,7 @@ public class TaskExecutorConfig {
 
     @Bean
     public ExecutorService createExecutorService() {
-        return Executors.newFixedThreadPool(10);
+        int THREAD_POOL_SIZE = 10;
+        return Executors.newFixedThreadPool(THREAD_POOL_SIZE);
     }
 }

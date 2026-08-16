@@ -1,5 +1,6 @@
 package com.aziz.taskflow.controller;
 
+import com.aziz.taskflow.service.TaskService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -9,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 @RestController
@@ -17,9 +17,11 @@ import java.util.concurrent.Future;
 public class TaskController {
 
     private final ExecutorService executor;
+    private final TaskService taskService;
 
-    public TaskController(ExecutorService executor) {
+    public TaskController(ExecutorService executor, TaskService taskService) {
         this.executor = executor;
+        this.taskService = taskService;
     }
 
     @PostMapping
@@ -30,16 +32,7 @@ public class TaskController {
 
         for (int i = 0; i < taskCount; i++) {
             int id = i + 1;
-            futures.add(executor.submit(() -> {
-                System.out.println("Executing task " + id + " on " + Thread.currentThread().getName());
-                try {
-                    // Simulate task execution
-                    Thread.sleep(1000); // Simulate a task taking 1000 milliseconds
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                    System.out.println("Interrupted task " + id + " on " + Thread.currentThread().getName());
-                }
-            }));
+            futures.add(executor.submit(() -> taskService.executeTask(id)));
         }
 
         // Wait for all tasks to complete
