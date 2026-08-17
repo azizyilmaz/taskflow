@@ -24,7 +24,7 @@ public class TaskService {
                 statement.setString(1, "task-" + taskId);
                 statement.executeUpdate();
             }
-            Thread.sleep(1000); // Simulate a task taking 1000 milliseconds
+            Thread.sleep(2000); // Simulate a task taking 2000 milliseconds
             System.out.println("Finished task " + taskId + " RELEASING CONNECTION on " + Thread.currentThread().getName());
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
