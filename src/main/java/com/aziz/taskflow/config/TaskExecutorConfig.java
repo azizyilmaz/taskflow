@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 public class TaskExecutorConfig {
 
     private static final int THREAD_POOL_SIZE = 10;
-    private static final int QUEUE_CAPACITY = 10;
+    private static final int QUEUE_CAPACITY = 50;
 
     @Bean
     public ThreadPoolExecutor createExecutorService() {
