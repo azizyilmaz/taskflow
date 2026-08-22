@@ -3,7 +3,7 @@ package com.aziz.taskflow.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 public class TaskExecutorConfig {
 
     private static final int THREAD_POOL_SIZE = 10;
+    private static final int QUEUE_CAPACITY = 10;
 
     @Bean
     public ThreadPoolExecutor createExecutorService() {
@@ -19,7 +20,8 @@ public class TaskExecutorConfig {
                 THREAD_POOL_SIZE,
                 0L,
                 TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<>()
+                new ArrayBlockingQueue<>(QUEUE_CAPACITY),
+                new ThreadPoolExecutor.AbortPolicy()
         );
     }
 }
