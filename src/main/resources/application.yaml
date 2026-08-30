@@ -8,6 +8,6 @@ spring:
     username: taskflow
     password: taskflow
     hikari:
-      maximum-pool-size: 10
-      minimum-idle: 10
+      maximum-pool-size: 70
+      minimum-idle: 70
       connection-timeout: 2000
